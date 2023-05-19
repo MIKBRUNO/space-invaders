@@ -7,23 +7,17 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         JFrame frame = new JFrame("title");
         frame.setPreferredSize(new Dimension(700, 400));
-//        frame.setResizable(false);
+        frame.setResizable(false);
         frame.setSize(700, 400);
         JComponent canvas = new JComponent() {
             int calls = 0;
             @Override
             public void paint(Graphics g) {
-                g.fillRect(calls*2, 10, 50, 50);
+                g.fillRect(calls, 10, 50, 50);
                 ++calls;
             }
         };
         canvas.setDoubleBuffered(true);
-//        Timer timer = new Timer(5, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                canvas.repaint();
-//            }
-//        });
 
         System.out.println(canvas.getBounds().width + " " + canvas.getBounds().height + " " + canvas.getBounds().x);
         frame.addKeyListener(new KeyAdapter() {
@@ -50,11 +44,10 @@ public class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-//        timer.start();
 
         while (true) {
-            canvas.repaint();
-            TimeUnit.MILLISECONDS.sleep(5);
+//            canvas.repaint();
+            frame.repaint();
         }
     }
 }

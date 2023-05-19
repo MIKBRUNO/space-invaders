@@ -1,7 +1,7 @@
 package game.controller;
 
-public interface GameController {
+public interface GameController<ControlledParameterClass> {
 
-    void setObserver(ControllerObserver observer);
+    void setObserver(ControllerObserver<ControlledParameterClass> observer);
 
 }

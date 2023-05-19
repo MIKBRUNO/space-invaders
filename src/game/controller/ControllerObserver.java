@@ -1,5 +1,5 @@
 package game.controller;
 
-public interface ControllerObserver {
-    void update(ControllerEvent e);
+public interface ControllerObserver<ControlledParameterClass> {
+    void update(ControlledParameterClass param);
 }

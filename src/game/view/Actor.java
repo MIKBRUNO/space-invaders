@@ -1,4 +1,7 @@
-package game;
+package game.view;
+
+import game.Bounds;
+import game.Location;
 
 public interface Actor {
     Location getLocation();
