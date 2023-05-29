@@ -1,6 +1,6 @@
-package game.view;
+package game.engine.view;
 
-import game.Bounds;
+import game.engine.types.Bounds;
 
 public interface Scene {
     Bounds getBounds();

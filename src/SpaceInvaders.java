@@ -1,9 +1,10 @@
-import game.Bounds;
-import game.GameObject;
-import game.GameSession;
-import game.Location;
-import swing_view.BlackScreenScene;
-import swing_view.SwingPawn;
+import game.engine.Arena;
+import game.engine.overlapping.OverlapFactor;
+import game.engine.types.Bounds;
+import game.engine.GameContext;
+import game.engine.types.Location;
+import swing_view.SwingGameView;
+import swing_view.SwingGuardian;
 
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
@@ -27,22 +28,30 @@ public class SpaceInvaders {
             }
         });
 
-        SwingController gameController = new SwingController((e) -> {});
+        SwingController gameController = new SwingController();
         frame.addKeyListener(gameController.keyListener);
 
         SwingGameView gameView = new SwingGameView();
         frame.add(gameView);
         frame.pack();
 
-        GameObject gameObject = new GameObject(gameController, gameView);
+        Arena arena = new Arena(new Bounds(1, (float)gameView.getHeight()/gameView.getWidth()));
+        SwingGuardian pawn = new SwingGuardian(arena, new Location(0.1f, 0.1f), new Bounds(0.1f, 0.1f));
+        arena.register(pawn.getLivingInstance());
 
-        BlackScreenScene arena = new BlackScreenScene(new Bounds(1, 1));
-        SwingPawn pawn = new SwingPawn(new Location(.1f, .1f), new Bounds(.2f, .2f));
-        arena.getActors().add(pawn);
-        GameSession session = new GameSession(arena, pawn);
-        session.addTickListener(pawn);
+        GameContext session = new GameContext(arena, pawn.getLivingInstance());
+
+        session.bindScene(arena);
+
+
+        session.register(pawn.getLivingInstance());
+        session.SessionOverlapManager.registerOverlappingObject(pawn.getLivingInstance(), OverlapFactor.GUARDIAN);
 
         frame.setVisible(true);
-        gameObject.startSession(session);
+        session.bindView(gameView);
+        session.bindController(gameController);
+//        gameController.register(pawn.getInstance());
+//        gameObject.startSession(session);
+        session.start();
     }
 }

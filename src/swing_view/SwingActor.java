@@ -1,6 +1,6 @@
 package swing_view;
 
-import game.view.Actor;
+import game.engine.view.Actor;
 
 import java.awt.*;
 

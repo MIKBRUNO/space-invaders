@@ -1,13 +1,12 @@
-import game.view.Actor;
-import game.view.GameView;
-import game.view.Scene;
-import swing_view.BgColorScene;
-import swing_view.SwingActor;
+package swing_view;
+
+import game.engine.Arena;
+import game.engine.view.Actor;
+import game.engine.view.GameView;
+import game.engine.view.Scene;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static java.lang.Math.floor;
 
 public class SwingGameView extends JPanel implements GameView {
     public SwingGameView() {
@@ -34,11 +33,10 @@ public class SwingGameView extends JPanel implements GameView {
 
     @Override
     public void setScene(Scene scene) {
-        SwingScene = (BgColorScene) scene;
-        setBackground(SwingScene.getBgColor());
+        SwingScene = scene;
     }
 
-    private BgColorScene SwingScene;
+    private Scene SwingScene;
     private final int tileSize = 48;
     private final int screenCols = 16;
     private final int screenRows = 12;

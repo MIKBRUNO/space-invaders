@@ -1,4 +1,4 @@
-package game.controller;
+package game.engine.controller;
 
 public enum ControllerEvent {
     LEFT_ARROW_PRESSED,

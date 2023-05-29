@@ -1,4 +1,4 @@
-package game.view;
+package game.engine.view;
 
 public interface GameView {
     void update();
