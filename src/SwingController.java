@@ -45,7 +45,7 @@ public class SwingController extends SmartSubscribing<ControllerObserver<Guardia
             if (PressedDirections[1]) {
                 res += 1;
             }
-            Observer.update(new GuardianControllerEvent(new Vector(res, 0), fire));
+            Observer.controllerUpdate(new GuardianControllerEvent(new Vector(res, 0), fire));
         }
 
         @Override
@@ -63,11 +63,11 @@ public class SwingController extends SmartSubscribing<ControllerObserver<Guardia
             if (PressedDirections[1]) {
                 res += 1;
             }
-            Observer.update(new GuardianControllerEvent(new Vector(res, 0), false));
+            Observer.controllerUpdate(new GuardianControllerEvent(new Vector(res, 0), false));
         }
     };
 
     private boolean isPossibleToFireAgain = true;
 
-    private ControllerObserver<GuardianControllerEvent> Observer = null;
+    private ControllerObserver<GuardianControllerEvent> Observer;
 }

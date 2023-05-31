@@ -1,13 +1,15 @@
 package game.engine.smart_register;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class LivingSubscriber<TSubscriber> {
+public final class LivingSubscriber<TSubscriber> {
     public LivingSubscriber(TSubscriber subscriber) {
         HeldSub = subscriber;
     }
 
-    public TSubscriber getSubscriber() {
+    public synchronized TSubscriber getSubscriber() {
         return HeldSub;
     }
 
@@ -15,13 +17,15 @@ public class LivingSubscriber<TSubscriber> {
         Listeners.add(subscribing);
     }
 
-    public void destroy() {
-        for (SmartSubscribing<? super TSubscriber> listener : Listeners) {
-            listener.onDeathCallback(HeldSub);
+    public synchronized void destroy() {
+        synchronized (Listeners) {
+            for (SmartSubscribing<? super TSubscriber> listener : Listeners) {
+                listener.onDeathCallback(HeldSub);
+            }
         }
     }
 
-    private final ArrayList<SmartSubscribing<? super TSubscriber>> Listeners = new ArrayList<>();
+    private final List<SmartSubscribing<? super TSubscriber>> Listeners = Collections.synchronizedList( new ArrayList<>() );
 
     private final TSubscriber HeldSub;
 }

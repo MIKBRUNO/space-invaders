@@ -4,18 +4,18 @@ import game.engine.smart_register.LivingSubscriber;
 import game.engine.smart_register.SmartSubscribing;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OverlapManager {
     public void registerOverlappingObject(LivingSubscriber<? extends OverlappingObject> object, OverlapFactor tag) {
         Subscriptions.get(tag).register(object);
-//        OverlapParts.get(tag).add(object);
     }
 
     public void update() {
-        List<OverlapFactor> list = OverlapParts.keySet().stream().toList();
-        for (int i = 0; i < list.size(); ++i) {
-            for (int j = i + 1; j < list.size(); ++j) {
-                overlap(list.get(i), list.get(j));
+        var tags = OverlapFactor.values();
+        for (int i = 0; i < tags.length; ++i) {
+            for (int j = i + 1; j < tags.length; ++j) {
+                overlap(tags[i], tags[j]);
             }
         }
     }
@@ -34,7 +34,7 @@ public class OverlapManager {
     public OverlapManager() {
         for (OverlapFactor tag : OverlapFactor.values()) {
             Subscriptions.put(tag, new TaggedSmartSubscribing(tag));
-            OverlapParts.put(tag, new ArrayList<>());
+            OverlapParts.put(tag, new CopyOnWriteArrayList<>());
         }
     }
 
@@ -58,8 +58,12 @@ public class OverlapManager {
         return xOverlap && yOverlap;
     }
 
-    private final EnumMap<OverlapFactor, ArrayList<OverlappingObject>> OverlapParts = new EnumMap<>(OverlapFactor.class);
-    private final EnumMap<OverlapFactor, TaggedSmartSubscribing> Subscriptions = new EnumMap<>(OverlapFactor.class);
+    private final Map<OverlapFactor, List<OverlappingObject>> OverlapParts = Collections.synchronizedMap(
+            new EnumMap<>(OverlapFactor.class)
+    );
+    private final Map<OverlapFactor, TaggedSmartSubscribing> Subscriptions = Collections.synchronizedMap(
+            new EnumMap<>(OverlapFactor.class)
+    );
 
     private class TaggedSmartSubscribing extends SmartSubscribing<OverlappingObject> {
 

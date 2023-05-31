@@ -1,0 +1,2 @@
+game.Guardian -> swing_view.SwingGuardianView
+game.Bullet -> swing_view.SwingBulletView
