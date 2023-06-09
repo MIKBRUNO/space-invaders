@@ -126,7 +126,7 @@ public class SpaceInvaders extends SmartSubscribing<GameInfoListener> {
                 refreshScene();
             }
             case RUNNING -> {
-                // 🗿🚬
+                //...
             }
             case LOSE -> {
                 SIScoreCounter.commitScore();
