@@ -66,12 +66,12 @@ public abstract class ArenaActor implements OverlappingActor {
     }
 
     @Override
-    public synchronized final Location getOverlapLocation() {
+    public synchronized Location getOverlapLocation() {
         return ArActorLocation;
     }
 
     @Override
-    public synchronized final Bounds getOverlapBounds() {
+    public synchronized Bounds getOverlapBounds() {
         return ArActorBounds;
     }
 

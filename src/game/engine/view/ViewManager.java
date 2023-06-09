@@ -1,6 +1,6 @@
 package game.engine.view;
 
-import game.engine.GameSession;
+import game.engine.GameContext;
 import game.engine.actors.Actor;
 import game.engine.smart_register.SmartSubscribing;
 
@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class ViewManager extends SmartSubscribing<Actor> {
-    public abstract void update(GameSession.GameContext context);
+    public abstract void update(GameContext context);
 
     protected final Collection<ActorView> getActorViews() {
         return ActorMap.values();
@@ -20,8 +20,8 @@ public abstract class ViewManager extends SmartSubscribing<Actor> {
         ActorView view = ActorViewFactory.createViewForActor(actor);
         if (view != null) {
             view.setActor(actor);
+            ActorMap.put(actor, view);
         }
-        ActorMap.put(actor, view);
     }
 
     @Override

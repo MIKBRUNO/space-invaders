@@ -6,21 +6,20 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 import static java.lang.Math.round;
 
-public class SwingGuardianView implements SwingActorView {
-    public SwingGuardianView() {
+public class SwingUfoView implements SwingActorView {
+    public SwingUfoView() {
         try {
-            URL url = SwingGuardianView.class.getResource("guardian_0.png");
+            URL url = SwingUfoView.class.getResource("ufo-0.png");
             if (url == null) {
-                throw new RuntimeException("guardian sprite not found");
+                throw new RuntimeException("ufo sprite not found");
             }
             IMG = ImageIO.read(url);
         } catch (IOException e) {
-            throw new RuntimeException("guardian sprite not found");
+            throw new RuntimeException("ufo sprite not found");
         }
     }
 

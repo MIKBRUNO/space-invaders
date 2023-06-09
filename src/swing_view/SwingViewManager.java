@@ -1,6 +1,7 @@
 package swing_view;
 
-import game.engine.GameSession;
+import game.engine.GameContext;
+import game.engine.overlapping.OverlapFactor;
 import game.engine.view.ActorView;
 import game.engine.view.Scene;
 import game.engine.view.ViewManager;
@@ -11,12 +12,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class SwingViewManager extends ViewManager {
-    public SwingViewManager() {
+    public SwingViewManager(int screenWidth, int screenHeight) {
+        ScreenWidth = screenWidth;
+        ScreenHeight = screenHeight;
         SwingPanel.setPreferredSize(new Dimension(screenWidth, screenHeight));
         SwingPanel.setBackground(Color.BLACK);
         SwingPanel.setDoubleBuffered(true);
 
         try (InputStream in = SwingViewManager.class.getResourceAsStream("conf.txt")) {
+            if (in == null) {
+                throw new RuntimeException("bad config file");
+            }
             ActorViewFactory.setClassMap(in);
         } catch (IOException e) {
             throw new RuntimeException("bad config file");
@@ -25,7 +31,8 @@ public class SwingViewManager extends ViewManager {
     }
 
     public void paintCallback(Graphics g) {
-
+//        g.setColor(Color.WHITE);
+//        g.drawString("Overlapping bullets: " + Context.getOverlapManager().OverlapParts.get(OverlapFactor.BULLET).size(), 100, 100);
     }
 
     public final JPanel SwingPanel = new JPanel() {
@@ -38,8 +45,8 @@ public class SwingViewManager extends ViewManager {
             Scene SwingScene = Context.getScene();
             getActorViews().forEach((ActorView i) -> {
                 SwingActorView ra = (SwingActorView) i;
-                float wRatio = screenWidth / SwingScene.getBounds().width();
-                float hRatio = screenHeight / SwingScene.getBounds().height();
+                float wRatio = ScreenWidth / SwingScene.getBounds().width();
+                float hRatio = ScreenHeight / SwingScene.getBounds().height();
                 ra.paintActor(g, wRatio, hRatio);
             });
             paintCallback(g);
@@ -47,15 +54,13 @@ public class SwingViewManager extends ViewManager {
     };
 
     @Override
-    public void update(GameSession.GameContext context) {
+    public void update(GameContext context) {
         Context = context;
         SwingPanel.repaint();
     }
 
-    protected GameSession.GameContext Context = null;
-    protected final int tileSize = 48;
-    protected final int screenCols = 16;
-    protected final int screenRows = 12;
-    protected final int screenWidth = screenCols * tileSize;
-    protected final int screenHeight = screenRows * tileSize;
+    protected GameContext Context = null;
+
+    private final int ScreenWidth;
+    private final int ScreenHeight;
 }

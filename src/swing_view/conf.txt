@@ -1,2 +1,6 @@
-game.Guardian -> swing_view.SwingGuardianView
-game.Bullet -> swing_view.SwingBulletView
+game.guardian.Guardian -> swing_view.SwingGuardianView
+game.guardian.Bullet -> swing_view.SwingBulletView
+game.enemies.Crab -> swing_view.SwingCrabView
+game.enemies.Ufo -> swing_view.SwingUfoView
+game.enemies.Octopus -> swing_view.SwingOctopusView
+game.enemies.EnemyBullet -> swing_view.SwingEnemyBulletView

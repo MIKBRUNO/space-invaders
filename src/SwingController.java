@@ -1,4 +1,4 @@
-import game.GuardianControllerEvent;
+import game.guardian.GuardianControllerEvent;
 import game.engine.smart_register.SmartSubscribing;
 import game.engine.types.Vector;
 import game.engine.controller.ControllerObserver;

@@ -12,6 +12,7 @@ public class OverlapManager {
     }
 
     public void update() {
+//        System.out.println(OverlapParts.get(OverlapFactor.BULLET).size());
         var tags = OverlapFactor.values();
         for (int i = 0; i < tags.length; ++i) {
             for (int j = i + 1; j < tags.length; ++j) {
@@ -21,11 +22,27 @@ public class OverlapManager {
     }
 
     private void overlap(OverlapFactor tag1, OverlapFactor tag2) {
+//        ArrayList<OverlappingObject> list1;
+//        ArrayList<OverlappingObject> list2;
+//        synchronized (Subscriptions.get(tag1)) {
+//            list1 = new ArrayList<>(OverlapParts.get(tag1));
+//        }
+//        synchronized (Subscriptions.get(tag2)) {
+//            list2 = new ArrayList<>(OverlapParts.get(tag2));
+//        }
+//        for (OverlappingObject o1 : list1) {
+//            for (OverlappingObject o2 : list2) {
+//                if (overlaps(o1, o2)) {
+//                    o1.eventOnOverlap(o2, tag2);
+//                    o2.eventOnOverlap(o1, tag1);
+//                }
+//            }
+//        }
         for (OverlappingObject o1 : OverlapParts.get(tag1)) {
             for (OverlappingObject o2 : OverlapParts.get(tag2)) {
-                if (overlaps(o1, o2)) {
-                    o1.eventOnOverlap(o2);
-                    o2.eventOnOverlap(o1);
+                if (overlaps(o1, o2) || overlaps(o2, o1)) {
+                    o1.eventOnOverlap(o2, tag2);
+                    o2.eventOnOverlap(o1, tag1);
                 }
             }
         }
